@@ -23,5 +23,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Compose Skeleton"
-include(":app")
+include(":example")
 include(":skeleton")
