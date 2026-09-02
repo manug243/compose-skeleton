@@ -1,0 +1,33 @@
+# Gradle / Kotlin
+.gradle/
+.kotlin/
+build/
+
+# Local configuration and secrets
+local.properties
+secrets.properties
+keystore.properties
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+
+# Android generated files
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+output-metadata.json
+*.hprof
+
+# Signing keys
+*.jks
+*.keystore
+
+# Logs and operating system files
+*.log
+.DS_Store
+
+# Optional: Firebase/Google Services
+google-services.json
