@@ -19,6 +19,6 @@ jobs:
       - uses: android-actions/setup-android@v4
       - uses: gradle/actions/setup-gradle@v6
       - name: Install Android SDK platform
-        run: sdkmanager "platforms;android-37"
+        run: sdkmanager "platforms;android-37.0"
       - name: Verify library and example
         run: ./gradlew :skeleton:testDebugUnitTest :skeleton:lintDebug :example:lintDebug :example:assembleDebug
