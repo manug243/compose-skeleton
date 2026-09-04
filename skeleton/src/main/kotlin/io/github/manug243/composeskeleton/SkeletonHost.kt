@@ -11,12 +11,9 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.onGloballyPositioned
 import io.github.manug243.composeskeleton.internal.LocalSkeletonScope
@@ -30,7 +27,6 @@ public fun SkeletonHost(
     animationEnabled: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    var hostBounds by remember { mutableStateOf(Rect.Zero) }
     val shouldAnimate = enabled && animationEnabled
     val progress = if (shouldAnimate) {
         val transition = rememberInfiniteTransition(label = "Skeleton shimmer")
@@ -49,19 +45,19 @@ public fun SkeletonHost(
     } else {
         rememberUpdatedState(0f)
     }
-    val scopeState = remember(enabled, style, animationEnabled, progress, hostBounds) {
+    val scopeState = remember {
         SkeletonScopeState(
             enabled = enabled,
             style = style,
             animationEnabled = animationEnabled,
             progress = progress,
-            hostBounds = hostBounds,
         )
     }
+    scopeState.update(enabled, style, animationEnabled, progress)
 
     Box(
         modifier = modifier.onGloballyPositioned { coordinates ->
-            hostBounds = coordinates.boundsInWindow()
+            scopeState.hostBounds = coordinates.boundsInWindow(clipBounds = false)
         },
         propagateMinConstraints = true,
     ) {

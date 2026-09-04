@@ -16,8 +16,12 @@ public data class SkeletonStyle(
     public val direction: SkeletonDirection,
 ) {
     init {
+        require(baseColor != Color.Unspecified) { "baseColor must be specified." }
+        require(highlightColor != Color.Unspecified) { "highlightColor must be specified." }
         require(animationDurationMillis > 0) { "animationDurationMillis must be greater than zero." }
-        require(highlightWidth.value > 0f) { "highlightWidth must be greater than zero." }
+        require(highlightWidth.value.isFinite() && highlightWidth.value > 0f) {
+            "highlightWidth must be finite and greater than zero."
+        }
         require(tiltDegrees.isFinite()) { "tiltDegrees must be finite." }
     }
 }

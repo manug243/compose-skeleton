@@ -76,6 +76,23 @@ SkeletonHost(
 
 The default colors adapt to the system light or dark theme. Setting `animationEnabled` to `false` renders shimmer elements as solid placeholders. Skeleton content is removed from accessibility semantics while loading, except for elements using `Keep`.
 
+`animationDurationMillis` is the time for one complete shimmer sweep. Lower values move faster. Updating a duration while loading restarts the sweep; updating colors keeps its current position.
+
+Use `baseColor` for every solid placeholder and the outside of the shimmer, and `highlightColor` for the bright band. Pass `Color.Unspecified` to `SkeletonDefaults.style()` to retain its theme-aware color. Individual elements can override both colors while sharing the host animation:
+
+```kotlin
+Box(
+    modifier = Modifier
+        .size(72.dp)
+        .skeleton(
+            colors = SkeletonColors(
+                baseColor = Color(0xFF263238),
+                highlightColor = Color(0xFF80CBC4),
+            ),
+        ),
+)
+```
+
 ## Build
 
 ```shell

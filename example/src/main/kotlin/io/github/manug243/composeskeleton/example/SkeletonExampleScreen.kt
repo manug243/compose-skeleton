@@ -17,6 +17,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
@@ -46,7 +47,15 @@ fun SkeletonExampleScreen() {
     var loading by rememberSaveable { mutableStateOf(true) }
     var animationEnabled by rememberSaveable { mutableStateOf(true) }
     var direction by rememberSaveable { mutableStateOf(SkeletonDirection.LeftToRight) }
-    val style = SkeletonDefaults.style(direction = direction)
+    var animationDurationMillis by rememberSaveable { mutableStateOf(SkeletonDefaults.AnimationDurationMillis) }
+    var paletteIndex by rememberSaveable { mutableStateOf(0) }
+    val palette = SkeletonPalette.entries[paletteIndex]
+    val style = SkeletonDefaults.style(
+        baseColor = palette.baseColor,
+        highlightColor = palette.highlightColor,
+        direction = direction,
+        animationDurationMillis = animationDurationMillis,
+    )
 
     Scaffold(
         topBar = {
@@ -71,6 +80,33 @@ fun SkeletonExampleScreen() {
                 checked = animationEnabled,
                 onCheckedChange = { animationEnabled = it },
             )
+            Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                Text("Speed: ${animationDurationMillis} ms per sweep", style = MaterialTheme.typography.titleMedium)
+                Slider(
+                    value = animationDurationMillis.toFloat(),
+                    onValueChange = { animationDurationMillis = it.toInt() },
+                    valueRange = 300f..3_000f,
+                )
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    TextButton(onClick = { animationDurationMillis = 2_000 }) { Text("Slow") }
+                    TextButton(onClick = { animationDurationMillis = SkeletonDefaults.AnimationDurationMillis }) {
+                        Text("Normal")
+                    }
+                    TextButton(onClick = { animationDurationMillis = 700 }) { Text("Fast") }
+                }
+            }
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text("Colors", style = MaterialTheme.typography.titleMedium)
+                TextButton(
+                    onClick = { paletteIndex = (paletteIndex + 1) % SkeletonPalette.entries.size },
+                ) {
+                    Text(palette.label)
+                }
+            }
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -108,6 +144,17 @@ fun SkeletonExampleScreen() {
             )
         }
     }
+}
+
+private enum class SkeletonPalette(
+    val label: String,
+    val baseColor: Color,
+    val highlightColor: Color,
+) {
+    Theme("Theme default", Color.Unspecified, Color.Unspecified),
+    Ocean("Ocean", Color(0xFF1F3A4D), Color(0xFF75D5F0)),
+    Violet("Violet", Color(0xFF3F315C), Color(0xFFCBB5FF)),
+    Warm("Warm", Color(0xFF5A3D31), Color(0xFFFFC8A5)),
 }
 
 @Composable

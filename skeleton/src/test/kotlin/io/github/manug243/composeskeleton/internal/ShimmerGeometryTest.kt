@@ -96,4 +96,31 @@ class ShimmerGeometryTest {
         assertEquals(0f, end.start.x, 0.001f)
         assertEquals(-20f, end.end.x, 0.001f)
     }
+
+    @Test
+    fun topToBottom_movesAcrossEntireHost() {
+        val host = Rect(left = 10f, top = 20f, right = 110f, bottom = 120f)
+
+        val start = calculateGradientLine(
+            hostBounds = host,
+            elementBounds = host,
+            progress = 0f,
+            highlightWidthPx = 20f,
+            tiltDegrees = 0f,
+            direction = SkeletonDirection.TopToBottom,
+        )
+        val end = calculateGradientLine(
+            hostBounds = host,
+            elementBounds = host,
+            progress = 1f,
+            highlightWidthPx = 20f,
+            tiltDegrees = 0f,
+            direction = SkeletonDirection.TopToBottom,
+        )
+
+        assertEquals(-20f, start.start.y, 0.001f)
+        assertEquals(0f, start.end.y, 0.001f)
+        assertEquals(100f, end.start.y, 0.001f)
+        assertEquals(120f, end.end.y, 0.001f)
+    }
 }
