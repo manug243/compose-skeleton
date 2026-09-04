@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
@@ -29,19 +30,21 @@ public fun SkeletonHost(
 ) {
     val shouldAnimate = enabled && animationEnabled
     val progress = if (shouldAnimate) {
-        val transition = rememberInfiniteTransition(label = "Skeleton shimmer")
-        transition.animateFloat(
-            initialValue = 0f,
-            targetValue = 1f,
-            animationSpec = infiniteRepeatable(
-                animation = tween(
-                    durationMillis = style.animationDurationMillis,
-                    easing = LinearEasing,
+        key(style.animationDurationMillis) {
+            val transition = rememberInfiniteTransition(label = "Skeleton shimmer")
+            transition.animateFloat(
+                initialValue = 0f,
+                targetValue = 1f,
+                animationSpec = infiniteRepeatable(
+                    animation = tween(
+                        durationMillis = style.animationDurationMillis,
+                        easing = LinearEasing,
+                    ),
+                    repeatMode = RepeatMode.Restart,
                 ),
-                repeatMode = RepeatMode.Restart,
-            ),
-            label = "Skeleton shimmer progress",
-        )
+                label = "Skeleton shimmer progress",
+            )
+        }
     } else {
         rememberUpdatedState(0f)
     }

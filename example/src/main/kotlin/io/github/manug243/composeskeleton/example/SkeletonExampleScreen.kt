@@ -14,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Scaffold
@@ -40,6 +41,7 @@ import io.github.manug243.composeskeleton.SkeletonDirection
 import io.github.manug243.composeskeleton.SkeletonHost
 import io.github.manug243.composeskeleton.SkeletonMode
 import io.github.manug243.composeskeleton.skeleton
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -48,6 +50,9 @@ fun SkeletonExampleScreen() {
     var animationEnabled by rememberSaveable { mutableStateOf(true) }
     var direction by rememberSaveable { mutableStateOf(SkeletonDirection.LeftToRight) }
     var animationDurationMillis by rememberSaveable { mutableStateOf(SkeletonDefaults.AnimationDurationMillis) }
+    var speedSliderPosition by rememberSaveable {
+        mutableStateOf(durationToSpeedPosition(SkeletonDefaults.AnimationDurationMillis))
+    }
     var paletteIndex by rememberSaveable { mutableStateOf(0) }
     val palette = SkeletonPalette.entries[paletteIndex]
     val style = SkeletonDefaults.style(
@@ -81,18 +86,39 @@ fun SkeletonExampleScreen() {
                 onCheckedChange = { animationEnabled = it },
             )
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("Speed: ${animationDurationMillis} ms per sweep", style = MaterialTheme.typography.titleMedium)
-                Slider(
-                    value = animationDurationMillis.toFloat(),
-                    onValueChange = { animationDurationMillis = it.toInt() },
-                    valueRange = 300f..3_000f,
+                val selectedDuration = durationFromSpeedPosition(speedSliderPosition)
+                Text("Speed", style = MaterialTheme.typography.titleMedium)
+                Text(
+                    text = "${selectedDuration} ms per sweep",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
+                Slider(
+                    value = speedSliderPosition,
+                    onValueChange = { speedSliderPosition = it },
+                    onValueChangeFinished = {
+                        animationDurationMillis = durationFromSpeedPosition(speedSliderPosition)
+                    },
+                )
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Text("Slower", style = MaterialTheme.typography.labelMedium)
+                    Text("Faster", style = MaterialTheme.typography.labelMedium)
+                }
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    TextButton(onClick = { animationDurationMillis = 2_000 }) { Text("Slow") }
-                    TextButton(onClick = { animationDurationMillis = SkeletonDefaults.AnimationDurationMillis }) {
-                        Text("Normal")
+                    SpeedPreset.entries.forEach { preset ->
+                        val selected = selectedDuration == preset.durationMillis
+                        val selectPreset = {
+                            animationDurationMillis = preset.durationMillis
+                            speedSliderPosition = durationToSpeedPosition(preset.durationMillis)
+                        }
+                        if (selected) {
+                            FilledTonalButton(onClick = selectPreset) { Text(preset.label) }
+                        } else {
+                            TextButton(onClick = selectPreset) {
+                                Text(preset.label)
+                            }
+                        }
                     }
-                    TextButton(onClick = { animationDurationMillis = 700 }) { Text("Fast") }
                 }
             }
             Row(
@@ -145,6 +171,26 @@ fun SkeletonExampleScreen() {
         }
     }
 }
+
+private const val SlowestDurationMillis: Int = 3_000
+private const val FastestDurationMillis: Int = 300
+
+private enum class SpeedPreset(
+    val label: String,
+    val durationMillis: Int,
+) {
+    Slow("Slow", 2_000),
+    Normal("Normal", SkeletonDefaults.AnimationDurationMillis),
+    Fast("Fast", 700),
+}
+
+private fun durationToSpeedPosition(durationMillis: Int): Float =
+    (SlowestDurationMillis - durationMillis).toFloat() /
+        (SlowestDurationMillis - FastestDurationMillis)
+
+private fun durationFromSpeedPosition(speedPosition: Float): Int =
+    (SlowestDurationMillis -
+        (SlowestDurationMillis - FastestDurationMillis) * speedPosition.coerceIn(0f, 1f)).roundToInt()
 
 private enum class SkeletonPalette(
     val label: String,

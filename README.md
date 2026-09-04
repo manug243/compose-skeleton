@@ -76,7 +76,7 @@ SkeletonHost(
 
 The default colors adapt to the system light or dark theme. Setting `animationEnabled` to `false` renders shimmer elements as solid placeholders. Skeleton content is removed from accessibility semantics while loading, except for elements using `Keep`.
 
-`animationDurationMillis` is the time for one complete shimmer sweep. Lower values move faster. Updating a duration while loading restarts the sweep; updating colors keeps its current position.
+`animationDurationMillis` is the time for one complete shimmer sweep. Lower values move faster. Updating a duration while loading restarts the sweep; updating colors keeps its current position. In the example app, the speed slider runs from slower on the left to faster on the right.
 
 Use `baseColor` for every solid placeholder and the outside of the shimmer, and `highlightColor` for the bright band. Pass `Color.Unspecified` to `SkeletonDefaults.style()` to retain its theme-aware color. Individual elements can override both colors while sharing the host animation:
 
