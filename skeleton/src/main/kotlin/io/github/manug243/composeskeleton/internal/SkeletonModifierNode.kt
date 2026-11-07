@@ -15,14 +15,19 @@ import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
 import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.GlobalPositionAwareModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
+import androidx.compose.ui.node.ObserverModifierNode
 import androidx.compose.ui.node.SemanticsModifierNode
 import androidx.compose.ui.node.currentValueOf
 import androidx.compose.ui.node.invalidateDraw
+import androidx.compose.ui.node.invalidateSemantics
+import androidx.compose.ui.node.observeReads
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import androidx.compose.ui.unit.LayoutDirection
 import io.github.manug243.composeskeleton.SkeletonColors
 import io.github.manug243.composeskeleton.SkeletonDirection
 import io.github.manug243.composeskeleton.SkeletonMode
+import io.github.manug243.composeskeleton.SkeletonStyle
 
 internal data class SkeletonElement(
     val mode: SkeletonMode,
@@ -53,7 +58,8 @@ internal class SkeletonNode(
     DrawModifierNode,
     GlobalPositionAwareModifierNode,
     CompositionLocalConsumerModifierNode,
-    SemanticsModifierNode {
+    SemanticsModifierNode,
+    ObserverModifierNode {
 
     private var elementBounds: Rect = Rect.Zero
     private var cachedGeometry: ShimmerGeometry? = null
@@ -66,11 +72,24 @@ internal class SkeletonNode(
     private var cachedOutline: Outline? = null
     private var cachedOutlineShape: Shape? = null
     private var cachedOutlineSize = Size.Zero
-    private var cachedOutlineLayoutDirection: androidx.compose.ui.unit.LayoutDirection? = null
+    private var cachedOutlineLayoutDirection: LayoutDirection? = null
     private var cachedOutlineDensity = Float.NaN
     private var cachedOutlineFontScale = Float.NaN
-    private var cachedHostColorsStyle: io.github.manug243.composeskeleton.SkeletonStyle? = null
+    private var cachedHostColorsStyle: SkeletonStyle? = null
     private var cachedHostColors: SkeletonColors? = null
+
+    override fun onAttach() {
+        observeSemanticsInputs()
+    }
+
+    override fun onObservedReadsChanged() {
+        invalidateSemantics()
+        observeSemanticsInputs()
+    }
+
+    private fun observeSemanticsInputs() {
+        observeReads { currentValueOf(LocalSkeletonScope)?.enabled }
+    }
 
     override fun onGloballyPositioned(coordinates: LayoutCoordinates) {
         val newBounds = coordinates.boundsInWindow(clipBounds = false)

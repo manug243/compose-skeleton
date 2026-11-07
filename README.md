@@ -4,6 +4,8 @@ A lightweight Jetpack Compose library for layout-aware skeleton placeholders wit
 
 The skeleton uses the size already measured by Compose. You keep building the real component and add `Modifier.skeleton()` where you would add a background. One `SkeletonHost` coordinates the loading state and shimmer across all participating children.
 
+![Compose Skeleton shimmer demo](docs/demo.gif)
+
 ## Status
 
 The project is under active development and is not published to a package repository yet. The `example` module demonstrates the current API.
