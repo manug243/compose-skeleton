@@ -18,23 +18,22 @@ The `example` app lets you play with the library: toggle loading, switch shimmer
 
 ## Installation
 
-Requires `minSdk 24` and Jetpack Compose. Releases are built from Git tags (`v0.1.0`); until they are published, the artifact can be consumed through JitPack:
+Compose Skeleton is a Compose Multiplatform library. Supported targets: Android (`minSdk 24`), Desktop (JVM) and iOS (`iosArm64`, `iosSimulatorArm64`). The code lives entirely in `commonMain`, so it uses only common Compose APIs.
+
+Releases are built from Git tags (`v0.1.0`). Until the first release is published, the library is not available on a Maven repository.
 
 ```kotlin
-// settings.gradle.kts
-dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        maven("https://jitpack.io")
+// shared/build.gradle.kts
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("io.github.manug243:compose-skeleton:0.1.0")
+        }
     }
 }
-
-// app/build.gradle.kts
-dependencies {
-    implementation("com.github.manug243:compose-skeleton:v0.1.0")
-}
 ```
+
+Android-only projects can use the same coordinate in `dependencies { implementation(...) }`.
 
 ## Status
 
