@@ -5,6 +5,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 
+/**
+ * Visual settings shared by all placeholders of a [SkeletonHost].
+ *
+ * Create one with [SkeletonDefaults.style].
+ *
+ * @property baseColor Color of the placeholder.
+ * @property highlightColor Color at the center of the shimmer highlight.
+ * @property shape Default shape of placeholders.
+ * @property animationDurationMillis Duration of one shimmer sweep, greater than zero.
+ * @property highlightWidth Width of the shimmer highlight, greater than zero.
+ * @property tiltDegrees Extra rotation of the shimmer direction in degrees.
+ * @property direction Direction in which the highlight travels.
+ */
 @Immutable
 public data class SkeletonStyle(
     public val baseColor: Color,

@@ -19,6 +19,21 @@ import androidx.compose.ui.layout.onGloballyPositioned
 import io.github.manug243.composeskeleton.internal.LocalSkeletonScope
 import io.github.manug243.composeskeleton.internal.SkeletonScopeState
 
+/**
+ * Coordinates skeleton placeholders for all [Modifier.skeleton] children inside [content].
+ *
+ * While [enabled] is `true`, children draw placeholders according to their [SkeletonMode].
+ * All children share one shimmer animation, so the highlight sweeps across the whole host
+ * instead of restarting per element.
+ *
+ * @param enabled Whether placeholders are shown (for example while data is loading).
+ * @param modifier Modifier applied to the host container.
+ * @param style Colors, shape and shimmer settings. See [SkeletonDefaults.style].
+ * @param animationEnabled If `false`, shimmer elements are drawn as static base-color
+ * placeholders. Use this to respect a reduced-motion preference.
+ * @param content Content containing elements marked with [Modifier.skeleton]. The content
+ * receives the host's minimum constraints (`propagateMinConstraints = true`).
+ */
 @Composable
 public fun SkeletonHost(
     enabled: Boolean,

@@ -16,6 +16,26 @@ The `example` app lets you play with the library: toggle loading, switch shimmer
 ./gradlew :example:installDebug
 ```
 
+## Installation
+
+Requires `minSdk 24` and Jetpack Compose. Releases are built from Git tags (`v0.1.0`); until they are published, the artifact can be consumed through JitPack:
+
+```kotlin
+// settings.gradle.kts
+dependencyResolutionManagement {
+    repositories {
+        google()
+        mavenCentral()
+        maven("https://jitpack.io")
+    }
+}
+
+// app/build.gradle.kts
+dependencies {
+    implementation("com.github.manug243:compose-skeleton:v0.1.0")
+}
+```
+
 ## Status
 
 The project is under active development and is not published to a package repository yet. The `example` module demonstrates the current API.

@@ -9,12 +9,17 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
+/** Default values and the style factory for [SkeletonHost]. */
 public object SkeletonDefaults {
     public val Shape: Shape = RoundedCornerShape(8.dp)
     public val HighlightWidth: Dp = 160.dp
     public const val AnimationDurationMillis: Int = 1_200
     public const val TiltDegrees: Float = 20f
 
+    /**
+     * Creates a [SkeletonStyle]. Unspecified colors fall back to a light or dark default
+     * based on the system theme.
+     */
     @Composable
     public fun style(
         baseColor: Color = Color.Unspecified,
