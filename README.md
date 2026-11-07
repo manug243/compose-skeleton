@@ -6,6 +6,16 @@ The skeleton uses the size already measured by Compose. You keep building the re
 
 ![Compose Skeleton shimmer demo](docs/demo.gif)
 
+## Try it
+
+The `example` app lets you play with the library: toggle loading, switch shimmer on and off, change speed, colors and direction, and compare `Keep`, `Shimmer` and `Solid` on a real card.
+
+![Example app: speed, loading toggle and shimmer](docs/example-app.gif)
+
+```bash
+./gradlew :example:installDebug
+```
+
 ## Status
 
 The project is under active development and is not published to a package repository yet. The `example` module demonstrates the current API.
