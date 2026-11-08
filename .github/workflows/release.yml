@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    # macOS is required to build and publish the iOS artifacts.
+    runs-on: macos-latest
+    environment: maven-central
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: "21"
+      - uses: android-actions/setup-android@v4
+      - uses: gradle/actions/setup-gradle@v6
+      - name: Install Android SDK platform
+        run: sdkmanager "platforms;android-37.0"
+      - name: Check tag matches library version
+        run: |
+          VERSION=$(sed -n 's/^version = "\(.*\)"/\1/p' skeleton/build.gradle.kts)
+          if [ "v$VERSION" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match version $VERSION in skeleton/build.gradle.kts"
+            exit 1
+          fi
+      - name: Test
+        run: ./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:iosSimulatorArm64Test
+      - name: Publish to Maven Central
+        run: ./gradlew :skeleton:publishAndReleaseToMavenCentral --no-configuration-cache
+        env:
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
