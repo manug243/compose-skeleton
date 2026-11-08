@@ -1,6 +1,9 @@
 # Compose Skeleton
 
-A lightweight Jetpack Compose library for layout-aware skeleton placeholders with a synchronized shimmer effect.
+[![Maven Central](https://img.shields.io/maven-central/v/io.github.manug243/compose-skeleton)](https://central.sonatype.com/artifact/io.github.manug243/compose-skeleton)
+[![CI](https://github.com/manug243/compose-skeleton/actions/workflows/ci.yml/badge.svg)](https://github.com/manug243/compose-skeleton/actions/workflows/ci.yml)
+
+A lightweight Compose Multiplatform library for layout-aware skeleton placeholders with a synchronized shimmer effect.
 
 The skeleton uses the size already measured by Compose. You keep building the real component and add `Modifier.skeleton()` where you would add a background. One `SkeletonHost` coordinates the loading state and shimmer across all participating children.
 
@@ -20,7 +23,7 @@ The `example` app lets you play with the library: toggle loading, switch shimmer
 
 Compose Skeleton is a Compose Multiplatform library. Supported targets: Android (`minSdk 24`), Desktop (JVM) and iOS (`iosArm64`, `iosSimulatorArm64`). The code lives entirely in `commonMain`, so it uses only common Compose APIs.
 
-Releases are built from Git tags (`v0.1.0`). Until the first release is published, the library is not available on a Maven repository.
+Releases are published to Maven Central from Git tags (`v0.1.0`).
 
 ```kotlin
 // shared/build.gradle.kts
@@ -37,7 +40,7 @@ Android-only projects can use the same coordinate in `dependencies { implementat
 
 ## Status
 
-The project is under active development and is not published to a package repository yet. The `example` module demonstrates the current API.
+The library is at version `0.1.x`, so the API may still change before 1.0. The `example` module demonstrates the current API.
 
 ## Modules
 
@@ -127,11 +130,11 @@ Box(
 ## Build
 
 ```shell
-./gradlew :skeleton:testDebugUnitTest :skeleton:lintDebug
+./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:lint
 ./gradlew :example:assembleDebug :example:lintDebug
 ```
 
-The project requires JDK 21 and Android SDK platform 37.
+The project requires JDK 21 and Android SDK platform 37. The iOS targets (`./gradlew :skeleton:iosSimulatorArm64Test`) can only be built on macOS.
 
 ## License
 
