@@ -3,13 +3,13 @@ package io.github.manug243.composeskeleton
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import org.junit.Assert.assertThrows
-import org.junit.Test
+import kotlin.test.assertFailsWith
+import kotlin.test.Test
 
 class SkeletonStyleTest {
     @Test
     fun rejectsUnspecifiedColors() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertFailsWith<IllegalArgumentException> {
             SkeletonStyle(
                 baseColor = Color.Unspecified,
                 highlightColor = Color.White,
@@ -24,7 +24,7 @@ class SkeletonStyleTest {
 
     @Test
     fun rejectsNonFiniteHighlightWidth() {
-        assertThrows(IllegalArgumentException::class.java) {
+        assertFailsWith<IllegalArgumentException> {
             SkeletonStyle(
                 baseColor = Color.Black,
                 highlightColor = Color.White,

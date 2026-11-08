@@ -2,8 +2,8 @@ package io.github.manug243.composeskeleton.internal
 
 import androidx.compose.ui.geometry.Rect
 import io.github.manug243.composeskeleton.SkeletonDirection
-import org.junit.Assert.assertEquals
-import org.junit.Test
+import kotlin.test.assertEquals
+import kotlin.test.Test
 
 class ShimmerGeometryTest {
     @Test

@@ -4,6 +4,37 @@ A lightweight Jetpack Compose library for layout-aware skeleton placeholders wit
 
 The skeleton uses the size already measured by Compose. You keep building the real component and add `Modifier.skeleton()` where you would add a background. One `SkeletonHost` coordinates the loading state and shimmer across all participating children.
 
+![Compose Skeleton shimmer demo](docs/demo.gif)
+
+## Try it
+
+The `example` app lets you play with the library: toggle loading, switch shimmer on and off, change speed, colors and direction, and compare `Keep`, `Shimmer` and `Solid` on a real card.
+
+![Example app: speed, loading toggle and shimmer](docs/example-app.gif)
+
+```bash
+./gradlew :example:installDebug
+```
+
+## Installation
+
+Compose Skeleton is a Compose Multiplatform library. Supported targets: Android (`minSdk 24`), Desktop (JVM) and iOS (`iosArm64`, `iosSimulatorArm64`). The code lives entirely in `commonMain`, so it uses only common Compose APIs.
+
+Releases are built from Git tags (`v0.1.0`). Until the first release is published, the library is not available on a Maven repository.
+
+```kotlin
+// shared/build.gradle.kts
+kotlin {
+    sourceSets {
+        commonMain.dependencies {
+            implementation("io.github.manug243:compose-skeleton:0.1.0")
+        }
+    }
+}
+```
+
+Android-only projects can use the same coordinate in `dependencies { implementation(...) }`.
+
 ## Status
 
 The project is under active development and is not published to a package repository yet. The `example` module demonstrates the current API.

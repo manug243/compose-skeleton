@@ -1,32 +1,69 @@
 plugins {
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
+    alias(libs.plugins.compose.multiplatform)
     alias(libs.plugins.compose.compiler)
+    `maven-publish`
 }
 
-android {
-    namespace = "io.github.manug243.composeskeleton"
-    compileSdk = 37
+group = "io.github.manug243"
+version = "0.1.0"
 
-    defaultConfig {
+kotlin {
+    explicitApi()
+
+    androidLibrary {
+        namespace = "io.github.manug243.composeskeleton"
+        compileSdk = 37
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        withHostTestBuilder {}
     }
-    buildFeatures {
-        compose = true
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
-    }
+    jvm("desktop")
+    iosArm64()
+    iosSimulatorArm64()
 
+    sourceSets {
+        commonMain.dependencies {
+            api(libs.compose.mp.ui)
+            implementation(libs.compose.mp.animation.core)
+            implementation(libs.compose.mp.foundation)
+            implementation(libs.compose.mp.runtime)
+        }
+        commonTest.dependencies {
+            implementation(kotlin("test"))
+        }
+    }
 }
 
-dependencies {
-    api(platform(libs.androidx.compose.bom))
-    api(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.animation.core)
-    implementation(libs.androidx.compose.foundation)
-    implementation(libs.androidx.compose.runtime)
-    testImplementation(libs.junit)
+publishing {
+    publications.withType<MavenPublication>().configureEach {
+        pom {
+            name.set("Compose Skeleton")
+            description.set("Layout-aware skeleton placeholders with a synchronized shimmer for Compose Multiplatform.")
+            url.set("https://github.com/manug243/compose-skeleton")
+            licenses {
+                license {
+                    name.set("The Apache Software License, Version 2.0")
+                    url.set("https://www.apache.org/licenses/LICENSE-2.0.txt")
+                }
+            }
+            developers {
+                developer {
+                    id.set("manug243")
+                    name.set("manug243")
+                }
+            }
+            scm {
+                url.set("https://github.com/manug243/compose-skeleton")
+                connection.set("scm:git:https://github.com/manug243/compose-skeleton.git")
+            }
+        }
+    }
+}
+
+afterEvaluate {
+    publishing.publications.withType<MavenPublication>().configureEach {
+        artifactId = artifactId.replaceFirst("skeleton", "compose-skeleton")
+    }
 }
