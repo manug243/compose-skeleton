@@ -20,8 +20,12 @@ Commands:
 
 ```shell
 ./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:lint
+./gradlew :skeleton:jsTest :skeleton:wasmJsTest
+./gradlew :skeleton:checkKotlinAbi
 ./gradlew :example:assembleDebug :example:lintDebug
 ```
+
+The web tests need a local Chrome. If you change the public API on purpose, run `./gradlew :skeleton:updateKotlinAbi` and commit the updated files in `skeleton/api`.
 
 The iOS targets can only be built on macOS:
 

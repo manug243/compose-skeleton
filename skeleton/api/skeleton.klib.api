@@ -1,0 +1,101 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, js, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <io.github.manug243:skeleton>
+final enum class io.github.manug243.composeskeleton/SkeletonDirection : kotlin/Enum<io.github.manug243.composeskeleton/SkeletonDirection> { // io.github.manug243.composeskeleton/SkeletonDirection|null[0]
+    enum entry BottomToTop // io.github.manug243.composeskeleton/SkeletonDirection.BottomToTop|null[0]
+    enum entry LeftToRight // io.github.manug243.composeskeleton/SkeletonDirection.LeftToRight|null[0]
+    enum entry RightToLeft // io.github.manug243.composeskeleton/SkeletonDirection.RightToLeft|null[0]
+    enum entry TopToBottom // io.github.manug243.composeskeleton/SkeletonDirection.TopToBottom|null[0]
+
+    final val entries // io.github.manug243.composeskeleton/SkeletonDirection.entries|#static{}entries[0]
+        final fun <get-entries>(): kotlin.enums/EnumEntries<io.github.manug243.composeskeleton/SkeletonDirection> // io.github.manug243.composeskeleton/SkeletonDirection.entries.<get-entries>|<get-entries>#static(){}[0]
+
+    final fun valueOf(kotlin/String): io.github.manug243.composeskeleton/SkeletonDirection // io.github.manug243.composeskeleton/SkeletonDirection.valueOf|valueOf#static(kotlin.String){}[0]
+    final fun values(): kotlin/Array<io.github.manug243.composeskeleton/SkeletonDirection> // io.github.manug243.composeskeleton/SkeletonDirection.values|values#static(){}[0]
+}
+
+final class io.github.manug243.composeskeleton/SkeletonColors { // io.github.manug243.composeskeleton/SkeletonColors|null[0]
+    constructor <init>(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color) // io.github.manug243.composeskeleton/SkeletonColors.<init>|<init>(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+
+    final val baseColor // io.github.manug243.composeskeleton/SkeletonColors.baseColor|{}baseColor[0]
+        final fun <get-baseColor>(): androidx.compose.ui.graphics/Color // io.github.manug243.composeskeleton/SkeletonColors.baseColor.<get-baseColor>|<get-baseColor>(){}[0]
+    final val highlightColor // io.github.manug243.composeskeleton/SkeletonColors.highlightColor|{}highlightColor[0]
+        final fun <get-highlightColor>(): androidx.compose.ui.graphics/Color // io.github.manug243.composeskeleton/SkeletonColors.highlightColor.<get-highlightColor>|<get-highlightColor>(){}[0]
+
+    final fun copy(androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ...): io.github.manug243.composeskeleton/SkeletonColors // io.github.manug243.composeskeleton/SkeletonColors.copy|copy(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.manug243.composeskeleton/SkeletonColors.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.manug243.composeskeleton/SkeletonColors.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.manug243.composeskeleton/SkeletonColors.toString|toString(){}[0]
+}
+
+final class io.github.manug243.composeskeleton/SkeletonStyle { // io.github.manug243.composeskeleton/SkeletonStyle|null[0]
+    constructor <init>(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Shape, kotlin/Int, androidx.compose.ui.unit/Dp, kotlin/Float, io.github.manug243.composeskeleton/SkeletonDirection) // io.github.manug243.composeskeleton/SkeletonStyle.<init>|<init>(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Shape;kotlin.Int;androidx.compose.ui.unit.Dp;kotlin.Float;io.github.manug243.composeskeleton.SkeletonDirection){}[0]
+
+    final val animationDurationMillis // io.github.manug243.composeskeleton/SkeletonStyle.animationDurationMillis|{}animationDurationMillis[0]
+        final fun <get-animationDurationMillis>(): kotlin/Int // io.github.manug243.composeskeleton/SkeletonStyle.animationDurationMillis.<get-animationDurationMillis>|<get-animationDurationMillis>(){}[0]
+    final val baseColor // io.github.manug243.composeskeleton/SkeletonStyle.baseColor|{}baseColor[0]
+        final fun <get-baseColor>(): androidx.compose.ui.graphics/Color // io.github.manug243.composeskeleton/SkeletonStyle.baseColor.<get-baseColor>|<get-baseColor>(){}[0]
+    final val direction // io.github.manug243.composeskeleton/SkeletonStyle.direction|{}direction[0]
+        final fun <get-direction>(): io.github.manug243.composeskeleton/SkeletonDirection // io.github.manug243.composeskeleton/SkeletonStyle.direction.<get-direction>|<get-direction>(){}[0]
+    final val highlightColor // io.github.manug243.composeskeleton/SkeletonStyle.highlightColor|{}highlightColor[0]
+        final fun <get-highlightColor>(): androidx.compose.ui.graphics/Color // io.github.manug243.composeskeleton/SkeletonStyle.highlightColor.<get-highlightColor>|<get-highlightColor>(){}[0]
+    final val highlightWidth // io.github.manug243.composeskeleton/SkeletonStyle.highlightWidth|{}highlightWidth[0]
+        final fun <get-highlightWidth>(): androidx.compose.ui.unit/Dp // io.github.manug243.composeskeleton/SkeletonStyle.highlightWidth.<get-highlightWidth>|<get-highlightWidth>(){}[0]
+    final val shape // io.github.manug243.composeskeleton/SkeletonStyle.shape|{}shape[0]
+        final fun <get-shape>(): androidx.compose.ui.graphics/Shape // io.github.manug243.composeskeleton/SkeletonStyle.shape.<get-shape>|<get-shape>(){}[0]
+    final val tiltDegrees // io.github.manug243.composeskeleton/SkeletonStyle.tiltDegrees|{}tiltDegrees[0]
+        final fun <get-tiltDegrees>(): kotlin/Float // io.github.manug243.composeskeleton/SkeletonStyle.tiltDegrees.<get-tiltDegrees>|<get-tiltDegrees>(){}[0]
+
+    final fun copy(androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.graphics/Shape = ..., kotlin/Int = ..., androidx.compose.ui.unit/Dp = ..., kotlin/Float = ..., io.github.manug243.composeskeleton/SkeletonDirection = ...): io.github.manug243.composeskeleton/SkeletonStyle // io.github.manug243.composeskeleton/SkeletonStyle.copy|copy(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Shape;kotlin.Int;androidx.compose.ui.unit.Dp;kotlin.Float;io.github.manug243.composeskeleton.SkeletonDirection){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.manug243.composeskeleton/SkeletonStyle.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.manug243.composeskeleton/SkeletonStyle.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.manug243.composeskeleton/SkeletonStyle.toString|toString(){}[0]
+}
+
+final value class io.github.manug243.composeskeleton/SkeletonMode { // io.github.manug243.composeskeleton/SkeletonMode|null[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // io.github.manug243.composeskeleton/SkeletonMode.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // io.github.manug243.composeskeleton/SkeletonMode.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // io.github.manug243.composeskeleton/SkeletonMode.toString|toString(){}[0]
+
+    final object Companion { // io.github.manug243.composeskeleton/SkeletonMode.Companion|null[0]
+        final val Hide // io.github.manug243.composeskeleton/SkeletonMode.Companion.Hide|{}Hide[0]
+            final fun <get-Hide>(): io.github.manug243.composeskeleton/SkeletonMode // io.github.manug243.composeskeleton/SkeletonMode.Companion.Hide.<get-Hide>|<get-Hide>(){}[0]
+        final val Keep // io.github.manug243.composeskeleton/SkeletonMode.Companion.Keep|{}Keep[0]
+            final fun <get-Keep>(): io.github.manug243.composeskeleton/SkeletonMode // io.github.manug243.composeskeleton/SkeletonMode.Companion.Keep.<get-Keep>|<get-Keep>(){}[0]
+        final val Shimmer // io.github.manug243.composeskeleton/SkeletonMode.Companion.Shimmer|{}Shimmer[0]
+            final fun <get-Shimmer>(): io.github.manug243.composeskeleton/SkeletonMode // io.github.manug243.composeskeleton/SkeletonMode.Companion.Shimmer.<get-Shimmer>|<get-Shimmer>(){}[0]
+        final val Solid // io.github.manug243.composeskeleton/SkeletonMode.Companion.Solid|{}Solid[0]
+            final fun <get-Solid>(): io.github.manug243.composeskeleton/SkeletonMode // io.github.manug243.composeskeleton/SkeletonMode.Companion.Solid.<get-Solid>|<get-Solid>(){}[0]
+    }
+}
+
+final object io.github.manug243.composeskeleton/SkeletonDefaults { // io.github.manug243.composeskeleton/SkeletonDefaults|null[0]
+    final const val AnimationDurationMillis // io.github.manug243.composeskeleton/SkeletonDefaults.AnimationDurationMillis|{}AnimationDurationMillis[0]
+        final fun <get-AnimationDurationMillis>(): kotlin/Int // io.github.manug243.composeskeleton/SkeletonDefaults.AnimationDurationMillis.<get-AnimationDurationMillis>|<get-AnimationDurationMillis>(){}[0]
+    final const val TiltDegrees // io.github.manug243.composeskeleton/SkeletonDefaults.TiltDegrees|{}TiltDegrees[0]
+        final fun <get-TiltDegrees>(): kotlin/Float // io.github.manug243.composeskeleton/SkeletonDefaults.TiltDegrees.<get-TiltDegrees>|<get-TiltDegrees>(){}[0]
+
+    final val HighlightWidth // io.github.manug243.composeskeleton/SkeletonDefaults.HighlightWidth|{}HighlightWidth[0]
+        final fun <get-HighlightWidth>(): androidx.compose.ui.unit/Dp // io.github.manug243.composeskeleton/SkeletonDefaults.HighlightWidth.<get-HighlightWidth>|<get-HighlightWidth>(){}[0]
+    final val Shape // io.github.manug243.composeskeleton/SkeletonDefaults.Shape|{}Shape[0]
+        final fun <get-Shape>(): androidx.compose.ui.graphics/Shape // io.github.manug243.composeskeleton/SkeletonDefaults.Shape.<get-Shape>|<get-Shape>(){}[0]
+
+    final fun style(androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Color, androidx.compose.ui.graphics/Shape?, kotlin/Int, androidx.compose.ui.unit/Dp, kotlin/Float, io.github.manug243.composeskeleton/SkeletonDirection?, kotlin/Boolean, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int): io.github.manug243.composeskeleton/SkeletonStyle // io.github.manug243.composeskeleton/SkeletonDefaults.style|style(androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Color;androidx.compose.ui.graphics.Shape?;kotlin.Int;androidx.compose.ui.unit.Dp;kotlin.Float;io.github.manug243.composeskeleton.SkeletonDirection?;kotlin.Boolean;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+}
+
+final val io.github.manug243.composeskeleton/LocalSkeletonStyle // io.github.manug243.composeskeleton/LocalSkeletonStyle|{}LocalSkeletonStyle[0]
+    final fun <get-LocalSkeletonStyle>(): androidx.compose.runtime/ProvidableCompositionLocal<io.github.manug243.composeskeleton/SkeletonStyle?> // io.github.manug243.composeskeleton/LocalSkeletonStyle.<get-LocalSkeletonStyle>|<get-LocalSkeletonStyle>(){}[0]
+final val io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonColors$stableprop // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonColors$stableprop|#static{}io_github_manug243_composeskeleton_SkeletonColors$stableprop[0]
+final val io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonDefaults$stableprop // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonDefaults$stableprop|#static{}io_github_manug243_composeskeleton_SkeletonDefaults$stableprop[0]
+final val io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonStyle$stableprop // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonStyle$stableprop|#static{}io_github_manug243_composeskeleton_SkeletonStyle$stableprop[0]
+
+final fun (androidx.compose.ui/Modifier).io.github.manug243.composeskeleton/skeleton(io.github.manug243.composeskeleton/SkeletonMode = ..., androidx.compose.ui.graphics/Shape? = ..., io.github.manug243.composeskeleton/SkeletonColors? = ...): androidx.compose.ui/Modifier // io.github.manug243.composeskeleton/skeleton|skeleton@androidx.compose.ui.Modifier(io.github.manug243.composeskeleton.SkeletonMode;androidx.compose.ui.graphics.Shape?;io.github.manug243.composeskeleton.SkeletonColors?){}[0]
+final fun io.github.manug243.composeskeleton/SkeletonHost(kotlin/Boolean, androidx.compose.ui/Modifier?, io.github.manug243.composeskeleton/SkeletonStyle?, kotlin/Boolean, kotlin/Function3<androidx.compose.foundation.layout/BoxScope, androidx.compose.runtime/Composer, kotlin/Int, kotlin/Unit>, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // io.github.manug243.composeskeleton/SkeletonHost|SkeletonHost(kotlin.Boolean;androidx.compose.ui.Modifier?;io.github.manug243.composeskeleton.SkeletonStyle?;kotlin.Boolean;kotlin.Function3<androidx.compose.foundation.layout.BoxScope,androidx.compose.runtime.Composer,kotlin.Int,kotlin.Unit>;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]
+final fun io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonColors$stableprop_getter(): kotlin/Int // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonColors$stableprop_getter|io_github_manug243_composeskeleton_SkeletonColors$stableprop_getter(){}[0]
+final fun io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonDefaults$stableprop_getter(): kotlin/Int // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonDefaults$stableprop_getter|io_github_manug243_composeskeleton_SkeletonDefaults$stableprop_getter(){}[0]
+final fun io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonStyle$stableprop_getter(): kotlin/Int // io.github.manug243.composeskeleton/io_github_manug243_composeskeleton_SkeletonStyle$stableprop_getter|io_github_manug243_composeskeleton_SkeletonStyle$stableprop_getter(){}[0]

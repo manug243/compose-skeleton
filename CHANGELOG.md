@@ -15,12 +15,14 @@ Planned for 1.0.0-rc1.
 - Web targets: `wasmJs` and `js`.
 - `darkTheme` parameter on `SkeletonDefaults.style()`.
 - `LocalSkeletonStyle` composition local.
-- Input blocking for placeholders while loading.
+- Placeholders block presses and keyboard focus while loading; `Keep` elements stay interactive.
+- `copy()` on `SkeletonStyle` and `SkeletonColors`.
+- ABI validation of the public API (`skeleton/api`).
 
 ### Changed (breaking)
 
 - `SkeletonStyle` and `SkeletonColors` are no longer data classes.
-- `SkeletonMode` is no longer an enum.
+- `SkeletonMode` is a value class with constants instead of an enum. `SkeletonMode.Shimmer` and the other constants are used as before; a `when` over the mode needs an `else` branch.
 
 ## [0.1.0] - 2026-11-08
 
