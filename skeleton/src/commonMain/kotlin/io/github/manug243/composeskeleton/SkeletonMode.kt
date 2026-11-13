@@ -24,13 +24,13 @@ public value class SkeletonMode private constructor(private val value: Int) {
     public companion object {
         /**
          * Draws an animated shimmer placeholder (static if animation is disabled). The element
-         * is hidden from accessibility services and does not receive input.
+         * is hidden from accessibility services, and presses and focus are blocked.
          */
         public val Shimmer: SkeletonMode = SkeletonMode(0)
 
         /**
          * Draws a static base-color placeholder. The element is hidden from accessibility
-         * services and does not receive input.
+         * services, and presses and focus are blocked.
          */
         public val Solid: SkeletonMode = SkeletonMode(1)
 
@@ -42,7 +42,7 @@ public value class SkeletonMode private constructor(private val value: Int) {
 
         /**
          * Draws nothing but still occupies its layout space. The element is hidden from
-         * accessibility services and does not receive input.
+         * accessibility services, and presses and focus are blocked.
          */
         public val Hide: SkeletonMode = SkeletonMode(3)
     }

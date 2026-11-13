@@ -15,10 +15,10 @@ import io.github.manug243.composeskeleton.internal.SkeletonElement
  *   element's children. Modifiers before `.skeleton()`, such as a `background`, are still drawn.
  * - The semantics of the element's children and of modifiers after `.skeleton()` are cleared,
  *   and the element is hidden from accessibility services.
- * - Presses on the element and its children are blocked, so `clickable`, `toggleable`,
- *   `selectable` and tap gesture detectors do not fire, whether they come before or after
- *   `.skeleton()` in the modifier chain. Drags are not blocked, so an enclosing scroll container
- *   can still be scrolled from a placeholder.
+ * - Presses within the element's bounds are blocked for the element and its children, so
+ *   `clickable`, `toggleable`, `selectable` and tap gesture detectors do not fire, whether they
+ *   come directly before or after `.skeleton()` in the modifier chain. Drags are not blocked, so
+ *   an enclosing scroll container can still be scrolled from a placeholder.
  * - Focus targets after `.skeleton()` and inside the element cannot gain keyboard focus, and
  *   focus that is already inside the element is cleared.
  *
@@ -27,9 +27,11 @@ import io.github.manug243.composeskeleton.internal.SkeletonElement
  *
  * Known limitations, because a modifier cannot affect modifiers before it in the chain:
  * - Place `.skeleton()` **before** `clickable`, `focusable` and similar modifiers. A focusable
- *   modifier before `.skeleton()` can still gain keyboard focus, and the click action of a
- *   `clickable` before `.skeleton()` stays in the semantics tree (the node is hidden from
- *   accessibility services, but semantics actions can still be invoked directly).
+ *   modifier before `.skeleton()` can still gain keyboard focus and be activated with the
+ *   keyboard, and the click action of a `clickable` before `.skeleton()` stays in the semantics
+ *   tree (the node is hidden from accessibility services, but semantics actions can still be
+ *   invoked directly). Presses on layout space added between them, for example by
+ *   `clickable { }.padding(16.dp).skeleton()`, are not blocked at all.
  * - Mouse hover enter and exit events are not blocked, so hover effects of the element and its
  *   children still show while loading.
  * - A touch that lands just outside a small element, within its minimum touch target, is not

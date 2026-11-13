@@ -7,6 +7,7 @@ import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.foundation.text.BasicText
@@ -23,6 +24,7 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toPixelMap
 import androidx.compose.ui.platform.LocalFocusManager
@@ -286,9 +288,50 @@ class SkeletonUiTest {
         onNodeWithTag(ElementTag).assert(!isHiddenFromAccessibility).assertHasClickAction()
     }
 
+    @Test
+    fun semantics_keepParentWithPlaceholderChildStaysAccessible() = runComposeUiTest {
+        setContent {
+            Host(enabled = true, animationEnabled = false) {
+                Box(
+                    Modifier
+                        .testTag(ElementTag)
+                        .size(ElementSize)
+                        .skeleton(SkeletonMode.Keep)
+                        .clickable {},
+                ) {
+                    BasicText("placeholder", Modifier.skeleton())
+                }
+            }
+        }
+
+        onNodeWithTag(ElementTag).assert(!isHiddenFromAccessibility).assertHasClickAction()
+    }
+
     // endregion
 
     // region Pointer input
+
+    @Test
+    fun click_paddingBetweenClickableAndSkeletonIsNotBlocked() = runComposeUiTest {
+        // Documents a limitation: a press outside the skeleton node's bounds never reaches it.
+        var clicks = 0
+        setContent {
+            Host(enabled = true, animationEnabled = false) {
+                Box(
+                    Modifier
+                        .testTag(ElementTag)
+                        .size(ElementSize)
+                        .clickable { clicks++ }
+                        .padding(15.dp)
+                        .skeleton(),
+                )
+            }
+        }
+
+        onNodeWithTag(ElementTag).performMouseInput { click(Offset(2f, 2f)) }
+        onNodeWithTag(ElementTag).performMouseInput { click(center) }
+        runOnIdle { assertEquals(1, clicks) }
+    }
 
     @Test
     fun click_blockedWhenSkeletonBeforeClickable() = runComposeUiTest {
