@@ -31,7 +31,7 @@ jobs:
             exit 1
           fi
       - name: Test
-        run: ./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:iosSimulatorArm64Test
+        run: ./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:iosSimulatorArm64Test :skeleton:jsTest :skeleton:wasmJsTest :skeleton:checkKotlinAbi
       - name: Publish to Maven Central
         run: ./gradlew :skeleton:publishAndReleaseToMavenCentral --no-configuration-cache
         env:
@@ -40,3 +40,19 @@ jobs:
           ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyId: ${{ secrets.SIGNING_KEY_ID }}
           ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_KEY_PASSWORD }}
+
+  github-release:
+    needs: publish
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          PRERELEASE=""
+          case "$GITHUB_REF_NAME" in
+            *-*) PRERELEASE="--prerelease" ;;
+          esac
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes $PRERELEASE
