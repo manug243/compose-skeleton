@@ -7,10 +7,15 @@ plugins {
 }
 
 group = "io.github.manug243"
-version = "0.1.0"
+version = "1.0.0-rc1"
 
 kotlin {
     explicitApi()
+
+    @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+    abiValidation {
+        enabled.set(true)
+    }
 
     androidLibrary {
         namespace = "io.github.manug243.composeskeleton"
@@ -22,6 +27,15 @@ kotlin {
     jvm("desktop")
     iosArm64()
     iosSimulatorArm64()
+    // Executable binaries are needed so the Skiko runtime is bundled for the browser tests.
+    wasmJs {
+        browser()
+        binaries.executable()
+    }
+    js {
+        browser()
+        binaries.executable()
+    }
 
     sourceSets {
         commonMain.dependencies {
@@ -32,6 +46,11 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            implementation(libs.compose.mp.ui.test)
+        }
+        named("desktopTest").dependencies {
+            // Skiko native runtime for running Compose UI tests on the desktop JVM.
+            implementation(compose.desktop.currentOs)
         }
     }
 }

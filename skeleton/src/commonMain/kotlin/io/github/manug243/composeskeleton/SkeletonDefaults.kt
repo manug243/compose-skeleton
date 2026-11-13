@@ -11,14 +11,35 @@ import androidx.compose.ui.unit.dp
 
 /** Default values and the style factory for [SkeletonHost]. */
 public object SkeletonDefaults {
+    /** Default placeholder shape: rounded corners with an 8 dp radius. */
     public val Shape: Shape = RoundedCornerShape(8.dp)
+
+    /** Default width of the shimmer highlight. */
     public val HighlightWidth: Dp = 160.dp
+
+    /** Default duration of one shimmer sweep in milliseconds. */
     public const val AnimationDurationMillis: Int = 1_200
+
+    /** Default extra rotation of the shimmer direction in degrees. */
     public const val TiltDegrees: Float = 20f
 
     /**
-     * Creates a [SkeletonStyle]. Unspecified colors fall back to a light or dark default
-     * based on the system theme.
+     * Creates a [SkeletonStyle].
+     *
+     * Unspecified colors fall back to a neutral light or dark default, chosen by [darkTheme].
+     * Apps with their own theme switch should pass their theme's dark flag instead of relying on
+     * the system setting, or provide a complete style once through [LocalSkeletonStyle].
+     *
+     * @param baseColor Color of the placeholder, or [Color.Unspecified] for the default.
+     * @param highlightColor Color at the center of the shimmer highlight, or
+     * [Color.Unspecified] for the default.
+     * @param shape Default shape of placeholders.
+     * @param animationDurationMillis Duration of one shimmer sweep, greater than zero.
+     * @param highlightWidth Width of the shimmer highlight, finite and greater than zero.
+     * @param tiltDegrees Extra rotation of the shimmer direction in degrees, finite.
+     * @param direction Direction in which the highlight travels.
+     * @param darkTheme Whether to use the dark default colors for unspecified colors. Defaults
+     * to the system setting.
      */
     @Composable
     public fun style(
@@ -29,8 +50,8 @@ public object SkeletonDefaults {
         highlightWidth: Dp = HighlightWidth,
         tiltDegrees: Float = TiltDegrees,
         direction: SkeletonDirection = SkeletonDirection.LeftToRight,
+        darkTheme: Boolean = isSystemInDarkTheme(),
     ): SkeletonStyle {
-        val darkTheme = isSystemInDarkTheme()
         val resolvedBaseColor = baseColor.takeOrElse {
             if (darkTheme) Color(0xFF30343A) else Color(0xFFE3E6EA)
         }

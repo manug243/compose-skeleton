@@ -24,11 +24,16 @@ import io.github.manug243.composeskeleton.internal.SkeletonScopeState
  *
  * While [enabled] is `true`, children draw placeholders according to their [SkeletonMode].
  * All children share one shimmer animation, so the highlight sweeps across the whole host
- * instead of restarting per element.
+ * instead of restarting per element. Elements that are not in [SkeletonMode.Keep] are hidden
+ * from accessibility services and do not react to clicks while the host is enabled; see
+ * [Modifier.skeleton][skeleton] for details.
+ *
+ * Hosts can be nested. An element is controlled by its nearest enclosing host.
  *
  * @param enabled Whether placeholders are shown (for example while data is loading).
  * @param modifier Modifier applied to the host container.
- * @param style Colors, shape and shimmer settings. See [SkeletonDefaults.style].
+ * @param style Colors, shape and shimmer settings. Defaults to the style provided through
+ * [LocalSkeletonStyle], or [SkeletonDefaults.style] if none is provided.
  * @param animationEnabled If `false`, shimmer elements are drawn as static base-color
  * placeholders. Use this to respect a reduced-motion preference.
  * @param content Content containing elements marked with [Modifier.skeleton]. The content
@@ -38,7 +43,7 @@ import io.github.manug243.composeskeleton.internal.SkeletonScopeState
 public fun SkeletonHost(
     enabled: Boolean,
     modifier: Modifier = Modifier,
-    style: SkeletonStyle = SkeletonDefaults.style(),
+    style: SkeletonStyle = LocalSkeletonStyle.current ?: SkeletonDefaults.style(),
     animationEnabled: Boolean = true,
     content: @Composable BoxScope.() -> Unit,
 ) {

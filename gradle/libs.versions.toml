@@ -24,6 +24,7 @@ compose-mp-runtime = { group = "org.jetbrains.compose.runtime", name = "runtime"
 compose-mp-foundation = { group = "org.jetbrains.compose.foundation", name = "foundation", version.ref = "composeMultiplatform" }
 compose-mp-ui = { group = "org.jetbrains.compose.ui", name = "ui", version.ref = "composeMultiplatform" }
 compose-mp-animation-core = { group = "org.jetbrains.compose.animation", name = "animation-core", version.ref = "composeMultiplatform" }
+compose-mp-ui-test = { group = "org.jetbrains.compose.ui", name = "ui-test", version.ref = "composeMultiplatform" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
