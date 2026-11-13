@@ -1,6 +1,10 @@
 package io.github.manug243.composeskeleton.internal
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusProperties
+import androidx.compose.ui.focus.FocusPropertiesModifierNode
+import androidx.compose.ui.focus.invalidateFocusProperties
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
@@ -9,6 +13,9 @@ import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.ContentDrawScope
+import androidx.compose.ui.input.pointer.PointerEvent
+import androidx.compose.ui.input.pointer.PointerEventPass
+import androidx.compose.ui.input.pointer.changedToDownIgnoreConsumed
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.node.CompositionLocalConsumerModifierNode
@@ -16,6 +23,7 @@ import androidx.compose.ui.node.DrawModifierNode
 import androidx.compose.ui.node.GlobalPositionAwareModifierNode
 import androidx.compose.ui.node.ModifierNodeElement
 import androidx.compose.ui.node.ObserverModifierNode
+import androidx.compose.ui.node.PointerInputModifierNode
 import androidx.compose.ui.node.SemanticsModifierNode
 import androidx.compose.ui.node.currentValueOf
 import androidx.compose.ui.node.invalidateDraw
@@ -23,6 +31,8 @@ import androidx.compose.ui.node.invalidateSemantics
 import androidx.compose.ui.node.observeReads
 import androidx.compose.ui.platform.InspectorInfo
 import androidx.compose.ui.semantics.SemanticsPropertyReceiver
+import androidx.compose.ui.semantics.hideFromAccessibility
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import io.github.manug243.composeskeleton.SkeletonColors
 import io.github.manug243.composeskeleton.SkeletonDirection
@@ -51,15 +61,41 @@ internal data class SkeletonElement(
 }
 
 internal class SkeletonNode(
-    var mode: SkeletonMode,
-    var shape: Shape?,
-    var colors: SkeletonColors?,
+    mode: SkeletonMode,
+    shape: Shape?,
+    colors: SkeletonColors?,
 ) : Modifier.Node(),
     DrawModifierNode,
     GlobalPositionAwareModifierNode,
     CompositionLocalConsumerModifierNode,
     SemanticsModifierNode,
+    PointerInputModifierNode,
+    FocusPropertiesModifierNode,
     ObserverModifierNode {
+
+    var mode: SkeletonMode = mode
+        set(value) {
+            if (field == value) return
+            field = value
+            if (isAttached) {
+                invalidateDraw()
+                invalidateInteraction()
+            }
+        }
+
+    var shape: Shape? = shape
+        set(value) {
+            if (field == value) return
+            field = value
+            if (isAttached) invalidateDraw()
+        }
+
+    var colors: SkeletonColors? = colors
+        set(value) {
+            if (field == value) return
+            field = value
+            if (isAttached) invalidateDraw()
+        }
 
     private var elementBounds: Rect = Rect.Zero
     private var cachedGeometry: ShimmerGeometry? = null
@@ -79,17 +115,30 @@ internal class SkeletonNode(
     private var cachedHostColors: SkeletonColors? = null
 
     override fun onAttach() {
-        observeSemanticsInputs()
+        observeInteractionInputs()
     }
 
     override fun onObservedReadsChanged() {
-        invalidateSemantics()
-        observeSemanticsInputs()
+        invalidateInteraction()
+        observeInteractionInputs()
     }
 
-    private fun observeSemanticsInputs() {
+    private fun observeInteractionInputs() {
         observeReads { currentValueOf(LocalSkeletonScope)?.enabled }
     }
+
+    /** Re-evaluates semantics and focus properties after the blocking state may have changed. */
+    private fun invalidateInteraction() {
+        invalidateSemantics()
+        invalidateFocusProperties()
+    }
+
+    /**
+     * Whether this element currently shows a placeholder instead of interactive content, so its
+     * semantics, pointer input and focus must be blocked.
+     */
+    private val isBlocking: Boolean
+        get() = currentValueOf(LocalSkeletonScope)?.enabled == true && mode != SkeletonMode.Keep
 
     override fun onGloballyPositioned(coordinates: LayoutCoordinates) {
         val newBounds = coordinates.boundsInWindow(clipBounds = false)
@@ -100,9 +149,44 @@ internal class SkeletonNode(
     }
 
     override val shouldClearDescendantSemantics: Boolean
-        get() = currentValueOf(LocalSkeletonScope)?.enabled == true && mode != SkeletonMode.Keep
+        get() = isBlocking
 
-    override fun SemanticsPropertyReceiver.applySemantics() = Unit
+    override fun SemanticsPropertyReceiver.applySemantics() {
+        // Clearing only removes semantics of modifiers after this one and of children. Hiding
+        // the node also covers modifiers placed before `.skeleton()`, such as `clickable`.
+        if (isBlocking) hideFromAccessibility()
+    }
+
+    override fun onPointerEvent(pointerEvent: PointerEvent, pass: PointerEventPass, bounds: IntSize) {
+        // The initial pass runs from the root down to the target before any main-pass handler,
+        // including handlers placed before this node on the same element. Consuming the down
+        // change there makes clickable, toggleable, selectable and tap detectors ignore the
+        // gesture. Only downs are consumed so that an enclosing scroll container can still be
+        // dragged from a placeholder. Downs outside the element's own bounds (reaching it only
+        // through minimum touch target expansion) are left alone, so taps between small
+        // placeholders still reach an enclosing Keep element.
+        if (pass != PointerEventPass.Initial || !isBlocking) return
+        pointerEvent.changes.forEach { change ->
+            if (change.changedToDownIgnoreConsumed() && change.position.isWithin(bounds)) {
+                change.consume()
+            }
+        }
+    }
+
+    override fun onCancelPointerInput() = Unit
+
+    private fun Offset.isWithin(bounds: IntSize): Boolean =
+        x >= 0f && y >= 0f && x < bounds.width && y < bounds.height
+
+    // Stay transparent for overlapping siblings unless a placeholder is shown.
+    override fun sharePointerInputWithSiblings(): Boolean = !isBlocking
+
+    override fun applyFocusProperties(focusProperties: FocusProperties) {
+        if (isBlocking) {
+            focusProperties.canFocus = false
+            focusProperties.onEnter = { cancelFocusChange() }
+        }
+    }
 
     override fun ContentDrawScope.draw() {
         val scope = currentValueOf(LocalSkeletonScope)

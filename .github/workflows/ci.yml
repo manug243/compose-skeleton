@@ -27,6 +27,11 @@ jobs:
         run: sdkmanager "platforms;android-37.0"
       - name: Verify library and example
         run: ./gradlew :skeleton:desktopTest :skeleton:testAndroidHostTest :skeleton:lint :example:lintDebug :example:assembleDebug
+      - name: Compile and test web targets
+        # Browser tests run in headless Chrome, which is preinstalled on ubuntu-latest.
+        run: ./gradlew :skeleton:compileKotlinJs :skeleton:compileKotlinWasmJs :skeleton:jsTest :skeleton:wasmJsTest
+      - name: Check binary compatibility
+        run: ./gradlew :skeleton:checkKotlinAbi
 
   ios:
     runs-on: macos-latest

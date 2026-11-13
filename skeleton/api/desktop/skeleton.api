@@ -1,0 +1,82 @@
+public final class io/github/manug243/composeskeleton/LocalSkeletonStyleKt {
+	public static final fun getLocalSkeletonStyle ()Landroidx/compose/runtime/ProvidableCompositionLocal;
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonColors {
+	public static final field $stable I
+	public synthetic fun <init> (JJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy--OWjLjI (JJ)Lio/github/manug243/composeskeleton/SkeletonColors;
+	public static synthetic fun copy--OWjLjI$default (Lio/github/manug243/composeskeleton/SkeletonColors;JJILjava/lang/Object;)Lio/github/manug243/composeskeleton/SkeletonColors;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBaseColor-0d7_KjU ()J
+	public final fun getHighlightColor-0d7_KjU ()J
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonDefaults {
+	public static final field $stable I
+	public static final field AnimationDurationMillis I
+	public static final field INSTANCE Lio/github/manug243/composeskeleton/SkeletonDefaults;
+	public static final field TiltDegrees F
+	public final fun getHighlightWidth-D9Ej5fM ()F
+	public final fun getShape ()Landroidx/compose/ui/graphics/Shape;
+	public final fun style-TXLO1UU (JJLandroidx/compose/ui/graphics/Shape;IFFLio/github/manug243/composeskeleton/SkeletonDirection;ZLandroidx/compose/runtime/Composer;II)Lio/github/manug243/composeskeleton/SkeletonStyle;
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonDirection : java/lang/Enum {
+	public static final field BottomToTop Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public static final field LeftToRight Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public static final field RightToLeft Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public static final field TopToBottom Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public static fun getEntries ()Lkotlin/enums/EnumEntries;
+	public static fun valueOf (Ljava/lang/String;)Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public static fun values ()[Lio/github/manug243/composeskeleton/SkeletonDirection;
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonHostKt {
+	public static final fun SkeletonHost (ZLandroidx/compose/ui/Modifier;Lio/github/manug243/composeskeleton/SkeletonStyle;ZLkotlin/jvm/functions/Function3;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonMode {
+	public static final field Companion Lio/github/manug243/composeskeleton/SkeletonMode$Companion;
+	public static final synthetic fun box-impl (I)Lio/github/manug243/composeskeleton/SkeletonMode;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (ILjava/lang/Object;)Z
+	public static final fun equals-impl0 (II)Z
+	public fun hashCode ()I
+	public static fun hashCode-impl (I)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (I)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()I
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonMode$Companion {
+	public final fun getHide-kFfXRB8 ()I
+	public final fun getKeep-kFfXRB8 ()I
+	public final fun getShimmer-kFfXRB8 ()I
+	public final fun getSolid-kFfXRB8 ()I
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonModifierKt {
+	public static final fun skeleton-mtGN_ag (Landroidx/compose/ui/Modifier;ILandroidx/compose/ui/graphics/Shape;Lio/github/manug243/composeskeleton/SkeletonColors;)Landroidx/compose/ui/Modifier;
+	public static synthetic fun skeleton-mtGN_ag$default (Landroidx/compose/ui/Modifier;ILandroidx/compose/ui/graphics/Shape;Lio/github/manug243/composeskeleton/SkeletonColors;ILjava/lang/Object;)Landroidx/compose/ui/Modifier;
+}
+
+public final class io/github/manug243/composeskeleton/SkeletonStyle {
+	public static final field $stable I
+	public synthetic fun <init> (JJLandroidx/compose/ui/graphics/Shape;IFFLio/github/manug243/composeskeleton/SkeletonDirection;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun copy-ADWWe5w (JJLandroidx/compose/ui/graphics/Shape;IFFLio/github/manug243/composeskeleton/SkeletonDirection;)Lio/github/manug243/composeskeleton/SkeletonStyle;
+	public static synthetic fun copy-ADWWe5w$default (Lio/github/manug243/composeskeleton/SkeletonStyle;JJLandroidx/compose/ui/graphics/Shape;IFFLio/github/manug243/composeskeleton/SkeletonDirection;ILjava/lang/Object;)Lio/github/manug243/composeskeleton/SkeletonStyle;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getAnimationDurationMillis ()I
+	public final fun getBaseColor-0d7_KjU ()J
+	public final fun getDirection ()Lio/github/manug243/composeskeleton/SkeletonDirection;
+	public final fun getHighlightColor-0d7_KjU ()J
+	public final fun getHighlightWidth-D9Ej5fM ()F
+	public final fun getShape ()Landroidx/compose/ui/graphics/Shape;
+	public final fun getTiltDegrees ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
