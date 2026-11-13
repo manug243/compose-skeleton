@@ -32,6 +32,11 @@ kotlin {
         }
         commonTest.dependencies {
             implementation(kotlin("test"))
+            implementation(libs.compose.mp.ui.test)
+        }
+        named("desktopTest").dependencies {
+            // Skiko native runtime for running Compose UI tests on the desktop JVM.
+            implementation(compose.desktop.currentOs)
         }
     }
 }
